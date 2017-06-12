@@ -36,7 +36,7 @@ class Move:
         return 1500 + degrees * pos_per_degree
 
     def __do(self):
-        t = 300
+        t = 100
         param = '#1P%d#2P%d#3P%dT%d\r\n' % \
                 (self.__degrees_to_pos(self.m1), self.__degrees_to_pos(self.m2), self.__degrees_to_pos(self.m3), t)
         self.ser.write(param)
