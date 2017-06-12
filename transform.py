@@ -35,28 +35,26 @@ class Transform:
     def __C(self, x, y, z):
         v_id = self.__i_d(x, y, z)
         k = (self.C3 + v_id * v_id) / (self.C4 * v_id)
-        r = m.asin(k)
+        r = m.acos(k)
         return r
 
     def __D(self, x, y, z):
         v_id = self.__i_d(x, y, z)
         k = (self.C1 - v_id * v_id) / self.C2
-        r = m.asin(k)
+        r = m.acos(k)
         return r
 
     @staticmethod
     def __Z(x, y, z):
         if z == 0:
             return 0.0
-        return m.atan(m.sqrt(x * x + y * y) / z)
+        return m.atan(z / m.sqrt(x * x + y * y))
 
     def i(self, x, y, z):
         if y == 0:
             gamma = 0.0
         else:
             gamma = m.atan(x / y)
-        C_plus_Z = self.__C(x, y, z) + self.__Z(x, y, z)
-        alpha = -C_plus_Z
-        v_D = m.degrees(self.__C(x, y, z))
-        beta = m.pi / 2 + self.__D(x, y, z)
+        alpha = self.__C(x, y, z) + self.__Z(x, y, z)
+        beta = self.__D(x, y, z) + self.__C(x, y, z) + (1 if z >= 0 else -1) * self.__Z(x, y, z)
         return m.degrees(alpha), m.degrees(beta), m.degrees(gamma)
