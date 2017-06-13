@@ -13,8 +13,10 @@ class Move:
         self.ser = serial.Serial()
         self.ser.port = port
         self.ser.baudrate = baudrate
-        self.ser.open()
         self.transform = Transform(b, c)
+
+    def open(self):
+        self.ser.open()
 
     def close(self):
         self.ser.close()
